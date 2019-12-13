@@ -14,7 +14,9 @@ module.exports = {
     findResources,
     addTask,
     findTasks,
-    findPResources
+    findPResources,
+    addResource,
+    findRById
 }
 
 function findProjects(){
@@ -55,4 +57,19 @@ function findPResources(project_id){
     .join('projects as p', 'p.id', 'r.project_id')
     .select('r.id', 'r.resource_name', 'r.description', 'p.proj_name')
     .where('r.project_id', project_id);
+}
+
+function addResource(resource){
+    return db('resources')
+      .insert(resource, 'id')
+      .then(ids => {
+    const [id] = ids;
+      return findRById(id);
+  });
+}
+
+function findRById(id){
+    return db('resources')
+        .where({id})
+        .first();
 }
