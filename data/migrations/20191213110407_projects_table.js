@@ -8,7 +8,7 @@ exports.up = function(knex) {
             .notNullable();
         tbl.text('proj_description', 300);
         tbl.boolean('completed')
-            defaultTo(false);
+            .defaultTo(false);
     })
     .createTable('resources', tbl => {
         tbl.increments();
@@ -22,12 +22,12 @@ exports.up = function(knex) {
         tbl.integer('project_id')
           .unsigned()
           .notNullable()
-          .reference('id')
+          .references('id')
           .inTable('projects');
         tbl.integer('resource_id')
           .unsigned()
           .notNullable()
-          .reference('id')
+          .references('id')
           .inTable('resources');
     })
     .createTable('tasks', tbl => {
